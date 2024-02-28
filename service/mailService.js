@@ -3,7 +3,7 @@ import "dotenv/config";
 
 const { SENDER_ADDRESS, RECIPIENT_ADDRESS, EMAIL_CONFIG_PORT, EMAIL_CONFIG_USER, EMAIL_CONFIG_PASS } = process.env;
 
-export async function sendEmailNotification(filePath) {
+export async function sendEmailNotification(user, files) {
   const emailConf = {
     host: "smtp.yandex.ru",
     port: EMAIL_CONFIG_PORT,
@@ -18,8 +18,8 @@ export async function sendEmailNotification(filePath) {
   const mailOptions = {
     from: SENDER_ADDRESS,
     to: RECIPIENT_ADDRESS,
-    subject: "New File Uploaded",
-    text: `A new file has been uploaded: ${filePath}`,
+    subject: `New Files Uploaded for User ${user}`,
+    text: `A new file has been uploaded: ${user} ${files.join(", ")}`,
   };
 
   try {
