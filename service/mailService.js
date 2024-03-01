@@ -18,8 +18,45 @@ export async function sendEmailNotification(user, files) {
   const mailOptions = {
     from: SENDER_ADDRESS,
     to: RECIPIENT_ADDRESS,
-    subject: `New Files Uploaded for User ${user}`,
-    text: `A new file has been uploaded: ${user} ${files.join(", ")}`,
+    subject: `Уведомление о загрузке файла пользователем ${user}`,
+    html: `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            h1 {
+                font-size: 24px;
+            }
+            ul {
+                font-size: 18px;
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+            li {
+                margin-bottom: 10px;
+            }
+            a {
+                color: #007bff;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Пользователь ${user} загрузил файлы</h1>
+        <p>Список файлов:</p>
+        <ul>
+        ${files
+          .map((filePath) => {
+            return `<li><a href="${filePath}">${filePath}</a></li>`;
+          })
+          .join("")}
+        </ul>
+    </body>
+    </html>
+    `,
   };
 
   try {
