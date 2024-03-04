@@ -49,10 +49,12 @@ export async function sendEmailNotification(user, files) {
         <h1>Пользователь ${user} загрузил файлы</h1>
         <p>Список файлов:</p>
         <ul>
-        ${files.map((filePath) => {
-          const windowsPath = filePath.replace("/mnt", "D:\\УРОиСОК").replace(/\//g, PATH_SEPARATOR);
-          return `<li><a href="${windowsPath}">${windowsPath}</a></li>`;
-        })}
+        ${files
+          .map((filePath) => {
+            const windowsPath = filePath.replace("/mnt", "D:\\УРОиСОК").replace(/\//g, PATH_SEPARATOR);
+            return `<li><a href="${windowsPath}">${windowsPath}</a></li>`;
+          })
+          .join("")}
         </ul>
     </body>
     </html>
