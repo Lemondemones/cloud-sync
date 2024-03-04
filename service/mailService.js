@@ -1,7 +1,8 @@
 import nodemailer from "nodemailer";
 import "dotenv/config";
 
-const { SENDER_ADDRESS, RECIPIENT_ADDRESS, EMAIL_CONFIG_PORT, EMAIL_CONFIG_USER, EMAIL_CONFIG_PASS } = process.env;
+const { SENDER_ADDRESS, RECIPIENT_ADDRESS, EMAIL_CONFIG_PORT, EMAIL_CONFIG_USER, EMAIL_CONFIG_PASS, PATH_SEPARATOR } =
+  process.env;
 
 export async function sendEmailNotification(user, files) {
   const emailConf = {
@@ -48,14 +49,10 @@ export async function sendEmailNotification(user, files) {
         <h1>Пользователь ${user} загрузил файлы</h1>
         <p>Список файлов:</p>
         <ul>
-        ${files
-          .map((filePath) => {
-            return `<li><a href="${filePath.replace("/mnt", "D:\\УРОиСОК")}">${filePath.replace(
-              "/mnt",
-              "D:\\УРОиСОК"
-            )}</a></li>`;
-          })
-          .join("")}
+        ${files.map((filePath) => {
+          const windowsPath = filePath.replace("/mnt", "D:\\УРОиСОК").replace(/\//g, PATH_SEPARATOR);
+          return `<li><a href="${windowsPath}">${windowsPath}</a></li>`;
+        })}
         </ul>
     </body>
     </html>
