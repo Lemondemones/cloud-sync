@@ -13,8 +13,8 @@ export function runFileWatcher(dir) {
       /(^|[\/\\])appdata_ocbyr6147skr([\/\\]|$)/,
       "**/uploads/**",
       /test_imu/,
-      /(^|[\/\\])appdata_oc0bpjvrucpr([\/\\]|$)/,
-      /(^|[\/\\])files_trashbin([\/\\]|$)/,
+      /(^|[\/\\])appdata_oc0bpjvrucpr[\/\\]/,
+      /(^|[\/\\])files_trashbin[\/\\]/,
     ],
     persistent: true,
     ignoreInitial: true,
@@ -45,7 +45,7 @@ export function runFileWatcher(dir) {
         fileAddList[userDir] = [];
         clearTimeout(timer[userDir]);
         timer[userDir] = null;
-      }, 5000);
+      }, 10000);
 
       log(`New file detected: ${filePath}`);
     })
