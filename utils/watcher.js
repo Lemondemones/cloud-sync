@@ -8,7 +8,13 @@ let timer = {}; // Объект для хранения таймеров для 
 
 export function runFileWatcher(dir) {
   const watcher = chokidar.watch(dir, {
-    ignored: [/(^|[\/\\])\../, /(^|[\/\\])appdata_ocbyr6147skr([\/\\]|$)/, "**/uploads/**", /test_imu/],
+    ignored: [
+      /(^|[\/\\])\../,
+      /(^|[\/\\])appdata_ocbyr6147skr([\/\\]|$)/,
+      "**/uploads/**",
+      /test_imu/,
+      /(^|[\/\\])appdata_oc0bpjvrucpr([\/\\]|$)/,
+    ],
     persistent: true,
     ignoreInitial: true,
     awaitWriteFinish: {
@@ -21,7 +27,7 @@ export function runFileWatcher(dir) {
 
   watcher
     .on("add", async (filePath) => {
-      const userDir = path.basename(path.dirname(filePath));
+      const userDir = path.basename(path.dirname(path.dirname(filePath)));
 
       if (!fileAddList[userDir]) {
         fileAddList[userDir] = [];
