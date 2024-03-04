@@ -15,6 +15,8 @@ app.use(helmet());
 const init = async () => {
   try {
     runFileWatcher(NEXTCLOUD_DIR);
+    //const response = readdir(NEXTCLOUD_DIR, (er) => console.log(er))
+    //console.log(response)
     console.log("Start watching...");
   } catch (error) {
     console.log(error);

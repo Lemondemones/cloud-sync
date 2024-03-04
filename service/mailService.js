@@ -50,7 +50,10 @@ export async function sendEmailNotification(user, files) {
         <ul>
         ${files
           .map((filePath) => {
-            return `<li><a href="${filePath}">${filePath}</a></li>`;
+            return `<li><a href="${filePath.replace("/mnt", "D:\\УРОиСОК")}">${filePath.replace(
+              "/mnt",
+              "D:\\УРОиСОК"
+            )}</a></li>`;
           })
           .join("")}
         </ul>
