@@ -14,11 +14,12 @@ export function runFileWatcher(dir) {
       "**/uploads/**",
       /test_imu/,
       /(^|[\/\\])appdata_oc0bpjvrucpr([\/\\]|$)/,
+      /(^|[\/\\])files_trashbin([\/\\]|$)/,
     ],
     persistent: true,
     ignoreInitial: true,
     awaitWriteFinish: {
-      stabilityThreshold: 10000,
+      stabilityThreshold: 120000,
       pollInterval: 100,
     },
   });
