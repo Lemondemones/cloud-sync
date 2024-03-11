@@ -66,7 +66,7 @@ export async function sendEmailNotification(user, files) {
   };
 
   try {
-    // await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
     console.log("Email notification sent");
   } catch (error) {
     console.error("Error sending email notification:", error);
