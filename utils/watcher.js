@@ -19,7 +19,7 @@ export function runFileWatcher(dir) {
     persistent: true,
     ignoreInitial: true,
     awaitWriteFinish: {
-      stabilityThreshold: 120000,
+      stabilityThreshold: 1000,
       pollInterval: 100,
     },
   });
@@ -42,10 +42,11 @@ export function runFileWatcher(dir) {
 
       timer[userDir] = setTimeout(() => {
         sendEmailNotification(userDir, fileAddList[userDir]);
+        // writeExcelFile(userDir, fileAddList[userDir]);
         fileAddList[userDir] = [];
         clearTimeout(timer[userDir]);
         timer[userDir] = null;
-      }, 10000);
+      }, 5000);
 
       log(`New file detected: ${filePath}`);
     })

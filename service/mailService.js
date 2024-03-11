@@ -1,10 +1,12 @@
 import nodemailer from "nodemailer";
 import "dotenv/config";
-
-const { SENDER_ADDRESS, RECIPIENT_ADDRESS, EMAIL_CONFIG_PORT, EMAIL_CONFIG_USER, EMAIL_CONFIG_PASS, PATH_SEPARATOR } =
-  process.env;
+import fs from "fs";
+import { format } from "date-fns";
 
 export async function sendEmailNotification(user, files) {
+  const { SENDER_ADDRESS, RECIPIENT_ADDRESS, EMAIL_CONFIG_PORT, EMAIL_CONFIG_USER, EMAIL_CONFIG_PASS, PATH_SEPARATOR } =
+    process.env;
+
   const emailConf = {
     host: "smtp.yandex.ru",
     port: EMAIL_CONFIG_PORT,
@@ -53,18 +55,34 @@ export async function sendEmailNotification(user, files) {
             const networkPath = filePath
               // .replace("/mnt", `\\\\${WINDOWS_SERVER}\\уроисок`)
               .replace(/\//g, PATH_SEPARATOR);
-            return `<a href="${networkPath}">file:///${networkPath}</a><br>`;
+            return `<a href="${networkPath}">
+            =ГИПЕРССЫЛКА("${networkPath}";"${getLastModifiedDate(filePath)}")</a><br>`;
           })
           .join("")}
+         
     </body>
     </html>
     `,
   };
 
   try {
-    await transporter.sendMail(mailOptions);
+    // await transporter.sendMail(mailOptions);
     console.log("Email notification sent");
   } catch (error) {
     console.error("Error sending email notification:", error);
+  }
+}
+
+function getLastModifiedDate(filePath) {
+  try {
+    const stats = fs.statSync(filePath);
+    const formattedDate = format(stats.mtime, "dd.MM.yy");
+
+    console.log(formattedDate);
+
+    return formattedDate;
+  } catch (error) {
+    console.log(error);
+    return "dateIsUndefined";
   }
 }
